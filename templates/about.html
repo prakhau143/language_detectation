@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - LangSense AI</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#6366F1',
+                        'secondary': '#22D3EE',
+                        'hindi': '#FF6B35',
+                        'english': '#3B82F6',
+                        'hinglish': '#10B981',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="min-h-screen font-sans transition-all duration-300" style="background: var(--bg-main); color: var(--text-main);">
+    
+    <!-- 3D Animated Background Particles -->
+    <div id="particles-bg" class="fixed inset-0 -z-10"></div>
+    
+    <!-- Navigation -->
+    <nav class="glass sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: var(--primary-gradient);">
+                        <i class="fas fa-language text-white text-lg"></i>
+                    </div>
+                    <h1 class="text-xl font-bold" style="color: var(--text-main);">LangSense AI</h1>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="hover:opacity-80 transition-opacity" style="color: var(--text-muted);">Home</a>
+                    <a href="/history/" class="hover:opacity-80 transition-opacity" style="color: var(--text-muted);">History</a>
+                    <a href="/statistics/" class="hover:opacity-80 transition-opacity" style="color: var(--text-muted);">Statistics</a>
+                    <a href="/about/" class="font-semibold" style="color: var(--text-main);">About</a>
+                </div>
+                
+                <!-- Theme Toggle -->
+                <button id="theme-toggle" class="p-2 rounded-lg hover:opacity-80 transition-opacity" style="background: var(--bg-card);">
+                    <i class="fas fa-moon" style="color: var(--text-main);"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <div class="text-center mb-12">
+            <h1 class="text-5xl font-bold mb-4" style="color: var(--text-main);">
+                About LangSense AI
+            </h1>
+            <p class="text-xl max-w-3xl mx-auto" style="color: var(--text-muted);">
+                Advanced language detection powered by rule-based NLP and machine learning
+            </p>
+        </div>
+
+        <!-- Features Section -->
+        <div class="max-w-6xl mx-auto mb-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="glass-card p-6 text-center">
+                    <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style="background: var(--accent-primary); opacity: 0.2;">
+                        <i class="fas fa-brain text-2xl" style="color: var(--accent-primary);"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2" style="color: var(--text-main);">AI-Powered</h3>
+                    <p style="color: var(--text-muted);">Advanced NLP algorithms for accurate language detection</p>
+                </div>
+                
+                <div class="glass-card p-6 text-center">
+                    <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style="background: var(--accent-secondary); opacity: 0.2;">
+                        <i class="fas fa-bolt text-2xl" style="color: var(--accent-secondary);"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2" style="color: var(--text-main);">Lightning Fast</h3>
+                    <p style="color: var(--text-muted);">Real-time detection with minimal latency</p>
+                </div>
+                
+                <div class="glass-card p-6 text-center">
+                    <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style="background: var(--hinglish); opacity: 0.2;">
+                        <i class="fas fa-globe text-2xl" style="color: var(--hinglish);"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2" style="color: var(--text-main);">Multi-Language</h3>
+                    <p style="color: var(--text-muted);">Supports English, Hindi, and Hinglish detection</p>
+                </div>
+                
+                <div class="glass-card p-6 text-center">
+                    <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style="background: var(--hindi); opacity: 0.2;">
+                        <i class="fas fa-chart-line text-2xl" style="color: var(--hindi);"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2" style="color: var(--text-main);">High Accuracy</h3>
+                    <p style="color: var(--text-muted);">92-95% accuracy rate with confidence scoring</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- How It Works Section -->
+        <div class="max-w-4xl mx-auto mb-16">
+            <div class="glass-card p-8">
+                <h2 class="text-3xl font-bold text-center mb-8" style="color: var(--text-main);">How It Works</h2>
+                
+                <div class="space-y-8">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm" style="background: var(--accent-primary);">1</div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2" style="color: var(--text-main);">Unicode Analysis</h3>
+                            <p style="color: var(--text-muted);">Detects Devanagari characters (\u0900-\u097F) for Hindi text identification with strong signal weighting.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm" style="background: var(--accent-secondary);">2</div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2" style="color: var(--text-main);">Token Analysis</h3>
+                            <p style="color: var(--text-muted);">Uses English dictionary and stopwords to identify English text patterns and filter false positives.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm" style="background: var(--hinglish);">3</div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2" style="color: var(--text-main);">Pattern Matching</h3>
+                            <p style="color: var(--text-muted);">Identifies Hinglish using Roman Hindi verbs, particles, and bigram patterns like "ja raha", "kar raha".</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm" style="background: var(--accent-secondary);">4</div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-2" style="color: var(--text-main);">Confidence Scoring</h3>
+                            <p style="color: var(--text-muted);">Calculates weighted scores for each language and returns the highest confidence result with percentage breakdown.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technology Stack -->
+        <div class="max-w-4xl mx-auto mb-16">
+            <div class="glass-card p-8">
+                <h2 class="text-3xl font-bold text-center mb-8" style="color: var(--text-main);">Technology Stack</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4" style="color: var(--text-main);">Backend</h3>
+                        <ul class="space-y-2" style="color: var(--text-muted);">
+                            <li class="flex items-center"><i class="fab fa-python mr-3" style="color: var(--accent-primary);"></i>Python 3.10+</li>
+                            <li class="flex items-center"><i class="fas fa-django mr-3" style="color: var(--accent-secondary);"></i>Django 4+</li>
+                            <li class="flex items-center"><i class="fas fa-server mr-3" style="color: var(--english);"></i>Django REST Framework</li>
+                            <li class="flex items-center"><i class="fas fa-database mr-3" style="color: var(--hindi);"></i>SQLite/PostgreSQL</li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-bold mb-4" style="color: var(--text-main);">Frontend</h3>
+                        <ul class="space-y-2" style="color: var(--text-muted);">
+                            <li class="flex items-center"><i class="fab fa-html5 mr-3" style="color: var(--hindi);"></i>HTML5 & CSS3</li>
+                            <li class="flex items-center"><i class="fab fa-js mr-3" style="color: var(--accent-primary);"></i>JavaScript ES6+</li>
+                            <li class="flex items-center"><i class="fas fa-wind mr-3" style="color: var(--english);"></i>Tailwind CSS</li>
+                            <li class="flex items-center"><i class="fas fa-chart-bar mr-3" style="color: var(--accent-secondary);"></i>Chart.js</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- API Documentation -->
+        <!-- <div class="max-w-4xl mx-auto mb-16">
+            <div class="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-8">
+                <h2 class="text-3xl font-bold text-white text-center mb-8">API Documentation</h2>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-3">Detect Language</h3>
+                        <div class="bg-black/20 rounded-lg p-4 font-mono text-sm">
+                            <div class="text-green-400">POST</div>
+                            <div class="text-white">/api/detect-language/</div>
+                            <div class="text-gray-300 mt-2">Content-Type: application/json</div>
+                            <div class="text-gray-300">{ "text": "Your text here" }</div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-3">Get History</h3>
+                        <div class="bg-black/20 rounded-lg p-4 font-mono text-sm">
+                            <div class="text-green-400">GET</div>
+                            <div class="text-white">/api/detection-history/?page=1&per_page=20</div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-3">Get Statistics</h3>
+                        <div class="bg-black/20 rounded-lg p-4 font-mono text-sm">
+                            <div class="text-green-400">GET</div>
+                            <div class="text-white">/api/statistics/</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- Sample Test Cases -->
+        <!-- <div class="max-w-4xl mx-auto">
+            <div class="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-8">
+                <h2 class="text-3xl font-bold text-white text-center mb-8">Sample Test Cases</h2>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b border-white/20">
+                                <th class="text-left text-white font-medium py-3">Input Text</th>
+                                <th class="text-left text-white font-medium py-3">Expected Output</th>
+                                <th class="text-left text-white font-medium py-3">Confidence</th>
+                            </tr>
+                        </thead>
+                        <tbody class="space-y-2">
+                            <tr class="border-b border-white/10">
+                                <td class="py-3 text-white/80">"I am going to office"</td>
+                                <td class="py-3"><span class="px-3 py-1 bg-blue-500 text-white rounded-full text-sm">English</span></td>
+                                <td class="py-3 text-white/80">96%</td>
+                            </tr>
+                            <tr class="border-b border-white/10">
+                                <td class="py-3 text-white/80">"मैं आज ऑफिस जा रहा हूँ"</td>
+                                <td class="py-3"><span class="px-3 py-1 bg-orange-500 text-white rounded-full text-sm">Hindi</span></td>
+                                <td class="py-3 text-white/80">98%</td>
+                            </tr>
+                            <tr class="border-b border-white/10">
+                                <td class="py-3 text-white/80">"Main office ja raha hoon"</td>
+                                <td class="py-3"><span class="px-3 py-1 bg-green-500 text-white rounded-full text-sm">Hinglish</span></td>
+                                <td class="py-3 text-white/80">94%</td>
+                            </tr>
+                            <tr class="border-b border-white/10">
+                                <td class="py-3 text-white/80">"Kal meeting hai at office"</td>
+                                <td class="py-3"><span class="px-3 py-1 bg-green-500 text-white rounded-full text-sm">Hinglish</span></td>
+                                <td class="py-3 text-white/80">92%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main> -->
+
+    <!-- Footer -->
+    <footer class="mt-16" style="background: var(--bg-card); border-top: 1px solid var(--border-soft);">
+        <div class="max-w-7xl mx-auto px-4 py-8">
+            <div class="text-center" style="color: var(--text-muted);">
+                <p>© 2023 LangSense AI. Powered by advanced NLP technology.</p>
+                <p class="mt-2">Built with Django, REST Framework, and Tailwind CSS</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="/static/js/app.js"></script>
+    
+    <!-- tsParticles Library for 3D Background -->
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@3/tsparticles.bundle.min.js"></script>
+    
+    <!-- 3D Particles Background Initialization -->
+    <script>
+        // Initialize 3D animated background particles
+        tsParticles.load("particles-bg", {
+            particles: {
+                color: { value: "#ffffff" },
+                number: { value: 120 },
+                move: { enable: true, speed: 0.6 },
+                size: { value: 2 },
+                links: { enable: false },
+                opacity: { value: 0.3 }
+            },
+            interactivity: {
+                events: {
+                    onHover: { enable: true, mode: "repulse" }
+                },
+                modes: {
+                    repulse: { distance: 120 }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

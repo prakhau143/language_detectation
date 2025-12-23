@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detection History - LangSense AI</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#6366F1',
+                        'secondary': '#22D3EE',
+                        'hindi': '#FF6B35',
+                        'english': '#3B82F6',
+                        'hinglish': '#10B981',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="min-h-screen font-sans" style="background: var(--bg-main); color: var(--text-main);">
+    
+    <!-- Navigation -->
+    <nav class="glass sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: var(--primary-gradient);">
+                        <i class="fas fa-language text-white text-lg"></i>
+                    </div>
+                    <h1 class="text-xl font-bold" style="color: var(--text-main);">LangSense AI</h1>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="hover:opacity-80 transition-opacity" style="color: var(--text-muted);">Home</a>
+                    <a href="/history/" class="font-semibold" style="color: var(--text-main);">History</a>
+                    <a href="/statistics/" class="hover:opacity-80 transition-opacity" style="color: var(--text-muted);">Statistics</a>
+                    <a href="/about/" class="hover:opacity-80 transition-opacity" style="color: var(--text-muted);">About</a>
+                </div>
+                
+                <!-- Theme Toggle -->
+                <button id="theme-toggle" class="p-2 rounded-lg hover:opacity-80 transition-opacity" style="background: var(--bg-card);">
+                    <i class="fas fa-moon" style="color: var(--text-main);"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h2 class="text-4xl font-bold mb-4" style="color: var(--text-main);">
+                <i class="fas fa-history mr-3"></i>Detection History
+            </h2>
+            <p class="text-xl" style="color: var(--text-muted);">
+                View your previous language detection results and analytics
+            </p>
+        </div>
+
+        <!-- Filters -->
+        <div class="max-w-4xl mx-auto mb-8">
+            <div class="glass-card p-6">
+                <div class="flex flex-wrap gap-4 items-center">
+                    <div class="flex-1 min-w-64">
+                        <label class="block font-medium mb-2" style="color: var(--text-main);">Filter by Language</label>
+                        <select id="language-filter" class="w-full rounded-lg px-4 py-2" style="background: var(--bg-card); border: 1px solid var(--border-soft); color: var(--text-main);">
+                            <option value="">All Languages</option>
+                            <option value="Hindi">Hindi</option>
+                            <option value="English">English</option>
+                            <option value="Hinglish">Hinglish</option>
+                        </select>
+                    </div>
+                    <div class="flex-1 min-w-64">
+                        <label class="block font-medium mb-2" style="color: var(--text-main);">Search Text</label>
+                        <input type="text" id="search-filter" placeholder="Search in detected text..." 
+                               class="w-full rounded-lg px-4 py-2" style="background: var(--bg-card); border: 1px solid var(--border-soft); color: var(--text-main);">
+                    </div>
+                    <div class="flex items-end">
+                        <button id="apply-filters" class="px-6 py-2 rounded-lg font-medium transition-colors" style="background: var(--primary-gradient); color: white;">
+                            <i class="fas fa-filter mr-2"></i>Apply Filters
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- History Table -->
+        <div class="max-w-6xl mx-auto">
+            <div class="glass-card overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead style="background: var(--bg-card);">
+                            <tr>
+                                <th class="px-6 py-4 text-left font-medium" style="color: var(--text-main);">Input Text</th>
+                                <th class="px-6 py-4 text-left font-medium" style="color: var(--text-main);">Language</th>
+                                <th class="px-6 py-4 text-left font-medium" style="color: var(--text-main);">Confidence</th>
+                                <th class="px-6 py-4 text-left font-medium" style="color: var(--text-main);">Date</th>
+                                <th class="px-6 py-4 text-left font-medium" style="color: var(--text-main);">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-table-body">
+                            <!-- History items will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Loading State -->
+                <div id="loading-state" class="text-center py-12">
+                    <div class="spinner mx-auto mb-4"></div>
+                    <p style="color: var(--text-muted);">Loading detection history...</p>
+                </div>
+                
+                <!-- Empty State -->
+                <div id="empty-state" class="text-center py-12 hidden">
+                    <i class="fas fa-search text-4xl mb-4" style="color: var(--text-muted);"></i>
+                    <p style="color: var(--text-muted);">No detection history found.</p>
+                    <a href="/" class="inline-block mt-4 px-6 py-2 rounded-lg font-medium transition-colors" style="background: var(--primary-gradient); color: white;">
+                        Start Detecting
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="max-w-6xl mx-auto mt-8">
+            <div class="flex justify-between items-center">
+                <div style="color: var(--text-muted);">
+                    <span id="pagination-info">Showing 0-0 of 0 results</span>
+                </div>
+                <div class="flex space-x-2">
+                    <button id="prev-page" class="px-4 py-2 rounded-lg transition-colors disabled:opacity-50" style="background: var(--bg-card); border: 1px solid var(--border-soft); color: var(--text-main);" disabled>
+                        <i class="fas fa-chevron-left mr-1"></i>Previous
+                    </button>
+                    <button id="next-page" class="px-4 py-2 rounded-lg transition-colors disabled:opacity-50" style="background: var(--bg-card); border: 1px solid var(--border-soft); color: var(--text-main);" disabled>
+                        Next<i class="fas fa-chevron-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Recent Activity Chart -->
+    <section class="max-w-6xl mx-auto mb-8">
+        <div class="glass-card p-6">
+            <h3 class="text-2xl font-bold mb-4" style="color: var(--text-main);">
+                <i class="fas fa-chart-line mr-2"></i>Recent Activity (Last 7 Days)
+            </h3>
+            <div class="h-64">
+                <canvas id="historyActivityChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <!-- View Details Modal -->
+    <div id="viewModal" class="fixed inset-0 bg-black/70 hidden z-50">
+        <div class="bg-slate-900 p-6 rounded-xl max-w-xl mx-auto mt-24 border border-white/20">
+            <h3 class="text-xl font-bold mb-4" style="color: var(--text-main);">Detected Text</h3>
+            <pre id="modalText" class="whitespace-pre-wrap text-gray-300 bg-black/30 p-4 rounded-lg"></pre>
+            <button onclick="window.closeModal()" class="mt-4 px-4 py-2 rounded-lg transition-opacity hover:opacity-80" style="background: var(--accent-primary); color: white;">Close</button>
+        </div>
+    </div>
+
+    <!-- 3D Animated Background Particles -->
+    <div id="particles-bg" class="fixed inset-0 -z-10"></div>
+
+    <!-- Footer -->
+    <footer class="mt-16" style="background: var(--bg-card); border-top: 1px solid var(--border-soft);">
+        <div class="max-w-7xl mx-auto px-4 py-8">
+            <div class="text-center" style="color: var(--text-muted);">
+                <p>© 2023 LangSense AI. Powered by advanced NLP technology.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="/static/js/history.js"></script>
+    <script src="/static/js/app.js"></script>
+    
+    <!-- tsParticles Library for 3D Background -->
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@3/tsparticles.bundle.min.js"></script>
+    
+    <!-- 3D Particles Background Initialization -->
+    <script>
+        // Initialize 3D animated background particles
+        tsParticles.load("particles-bg", {
+            particles: {
+                color: { value: "#ffffff" },
+                number: { value: 120 },
+                move: { enable: true, speed: 0.6 },
+                size: { value: 2 },
+                links: { enable: false },
+                opacity: { value: 0.3 }
+            },
+            interactivity: {
+                events: {
+                    onHover: { enable: true, mode: "repulse" }
+                },
+                modes: {
+                    repulse: { distance: 120 }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LangSense AI - Smart Language Detection</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- tsParticles Library for 3D Background -->
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@3/tsparticles.bundle.min.js"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#6366F1',
+                        'secondary': '#22D3EE',
+                        'hindi': '#FF6B35',
+                        'english': '#3B82F6',
+                        'hinglish': '#10B981',
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.6s ease-out',
+                        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { boxShadow: '0 0 20px rgba(99, 102, 241, 0.3)' },
+                            '50%': { boxShadow: '0 0 30px rgba(99, 102, 241, 0.6)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="min-h-screen font-sans transition-all duration-300" style="background: var(--bg-main); color: var(--text-main);">
+    
+    <!-- 3D Animated Background Particles -->
+    <div id="particles-bg" class="fixed inset-0 -z-10"></div>
+    
+    <!-- Navigation -->
+    <nav class="glass sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: var(--primary-gradient);">
+                        <i class="fas fa-language text-white text-lg"></i>
+                    </div>
+                    <h1 class="text-xl font-bold" style="color: var(--text-main);">LangSense AI</h1>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="hover:opacity-80 transition-opacity" style="color: var(--text-muted);">Home</a>
+                    <a href="/history/" class="hover:opacity-80 transition-opacity" style="color: var(--text-muted);">History</a>
+                    <a href="/statistics/" class="hover:opacity-80 transition-opacity" style="color: var(--text-muted);">Statistics</a>
+                    <a href="/about/" class="hover:opacity-80 transition-opacity" style="color: var(--text-muted);">About</a>
+                </div>
+                
+                <!-- Theme Toggle -->
+                <button id="theme-toggle" class="p-2 rounded-lg hover:opacity-80 transition-opacity" style="background: var(--bg-card);">
+                    <i class="fas fa-moon" style="color: var(--text-main);"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <div class="text-center mb-12 animate-fade-in">
+            <h2 class="text-4xl md:text-6xl font-bold mb-4" style="color: var(--text-main);">
+                Smart Language Detection
+            </h2>
+            <p class="text-xl max-w-3xl mx-auto" style="color: var(--text-muted);">
+                Advanced AI-powered detection for English, Hindi, and Hinglish text with 92-95% accuracy
+            </p>
+        </div>
+
+        <!-- Main Detection Card -->
+        <div class="max-w-4xl mx-auto">
+            <div class="glass-card p-8 animate-slide-up">
+                
+                <!-- Input Section -->
+                <div class="mb-8">
+                    <label for="input-text" class="block font-medium mb-3" style="color: var(--text-main);">
+                        <i class="fas fa-edit mr-2"></i>Enter Text to Analyze
+                    </label>
+                    <textarea 
+                        id="input-text" 
+                        class="w-full h-32 rounded-xl px-4 py-3 resize-none transition-all"
+                        style="background: var(--bg-card); border: 1px solid var(--border-soft); color: var(--text-main);"
+                        placeholder="Type or paste your text here... (English, Hindi, or Hinglish)"
+                    ></textarea>
+                    <div class="flex justify-between items-center mt-2">
+                        <span class="text-sm" style="color: var(--text-muted);">
+                            <span id="char-count">0</span> / 10000 characters
+                        </span>
+                        <div class="space-x-2">
+                            <button id="clear-btn" class="px-4 py-2 hover:opacity-80 transition-opacity" style="color: var(--text-muted);">
+                                <i class="fas fa-times mr-1"></i>Clear
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detect Button -->
+                <div class="text-center mb-8">
+                    <button 
+                        id="detect-btn" 
+                        class="btn-primary px-8 py-4 rounded-xl font-semibold text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                        style="background: var(--primary-gradient);"
+                        disabled
+                    >
+                        <i class="fas fa-search mr-2"></i>
+                        <span id="btn-text">Detect Language</span>
+                        <div id="loading-spinner" class="hidden">
+                            <i class="fas fa-spinner fa-spin ml-2"></i>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Results Section -->
+                <div id="results-section" class="hidden animate-slide-up">
+                    <!-- Language Badge -->
+                    <div class="text-center mb-6">
+                        <div id="language-badge" class="inline-flex items-center px-6 py-3 rounded-full text-white font-bold text-xl shadow-lg">
+                            <i id="language-icon" class="mr-3"></i>
+                            <span id="detected-language">Language</span>
+                            <span id="confidence-text" class="ml-3 text-lg"></span>
+                        </div>
+                    </div>
+
+                    <!-- Confidence Progress Bar -->
+                    <div class="mb-8">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-medium" style="color: var(--text-main);">Confidence Level</span>
+                            <span id="confidence-percentage" class="font-bold" style="color: var(--text-main);">0%</span>
+                        </div>
+                        <div class="w-full rounded-full h-3" style="background: var(--border-soft);">
+                            <div id="confidence-bar" class="h-3 rounded-full transition-all duration-1000 ease-out" style="width: 0%; background: var(--primary-gradient);"></div>
+                        </div>
+                    </div>
+
+                    <!-- Detection Breakdown -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="p-4 rounded-xl" style="background: var(--bg-card); border: 1px solid var(--border-soft);">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-medium" style="color: var(--text-main);">Hindi</span>
+                                <i class="fas fa-om text-hindi"></i>
+                            </div>
+                            <div class="text-2xl font-bold text-hindi mb-1" id="hindi-percentage">0%</div>
+                            <div class="text-sm" id="hindi-score" style="color: var(--text-muted);">Score: 0</div>
+                        </div>
+                        
+                        <div class="p-4 rounded-xl" style="background: var(--bg-card); border: 1px solid var(--border-soft);">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-medium" style="color: var(--text-main);">English</span>
+                                <i class="fab fa-english text-english"></i>
+                            </div>
+                            <div class="text-2xl font-bold text-english mb-1" id="english-percentage">0%</div>
+                            <div class="text-sm" id="english-score" style="color: var(--text-muted);">Score: 0</div>
+                        </div>
+                        
+                        <div class="p-4 rounded-xl" style="background: var(--bg-card); border: 1px solid var(--border-soft);">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-medium" style="color: var(--text-main);">Hinglish</span>
+                                <i class="fas fa-globe text-hinglish"></i>
+                            </div>
+                            <div class="text-2xl font-bold text-hinglish mb-1" id="hinglish-percentage">0%</div>
+                            <div class="text-sm" id="hinglish-score" style="color: var(--text-muted);">Score: 0</div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <button id="new-detection-btn" class="px-6 py-3 rounded-lg font-medium transition-all" style="background: var(--bg-card); border: 1px solid var(--border-soft); color: var(--text-main);">
+                            <i class="fas fa-plus mr-2"></i>New Detection
+                        </button>
+                        <button id="save-result-btn" class="px-6 py-3 rounded-lg font-medium transition-all" style="background: var(--bg-card); border: 1px solid var(--border-soft); color: var(--text-main);">
+                            <i class="fas fa-save mr-2"></i>Save Result
+                        </button>
+                        <button id="share-result-btn" class="px-6 py-3 rounded-lg font-medium transition-all" style="background: var(--bg-card); border: 1px solid var(--border-soft); color: var(--text-main);">
+                            <i class="fas fa-share mr-2"></i>Share
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Error Section -->
+                <div id="error-section" class="hidden bg-red-500/20 border border-red-500/50 rounded-xl p-4 mb-6">
+                    <div class="flex items-center">
+                        <i class="fas fa-exclamation-triangle text-red-400 mr-3"></i>
+                        <span id="error-message" class="text-red-200"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sample Test Cases -->
+        <div class="max-w-4xl mx-auto mt-12">
+            <div class="glass-card p-6">
+                <h3 class="text-xl font-bold mb-4" style="color: var(--text-main);">
+                    <i class="fas fa-flask mr-2"></i>Try Sample Texts
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <button class="sample-text p-3 rounded-lg text-left transition-all" style="background: var(--bg-card); border: 1px solid var(--border-soft); color: var(--text-muted);" data-text="I am going to office">
+                        <div class="font-medium">English</div>
+                        <div class="text-sm">"I am going to office"</div>
+                    </button>
+                    <button class="sample-text p-3 rounded-lg text-left transition-all" style="background: var(--bg-card); border: 1px solid var(--border-soft); color: var(--text-muted);" data-text="मैं आज ऑफिस जा रहा हूँ">
+                        <div class="font-medium">Hindi</div>
+                        <div class="text-sm">"मैं आज ऑफिस जा रहा हूँ"</div>
+                    </button>
+                    <button class="sample-text p-3 rounded-lg text-left transition-all" style="background: var(--bg-card); border: 1px solid var(--border-soft); color: var(--text-muted);" data-text="Main office ja raha hoon">
+                        <div class="font-medium">Hinglish</div>
+                        <div class="text-sm">"Main office ja raha hoon"</div>
+                    </button>
+                    <button class="sample-text p-3 rounded-lg text-left transition-all" style="background: var(--bg-card); border: 1px solid var(--border-soft); color: var(--text-muted);" data-text="Kal meeting hai at office">
+                        <div class="font-medium">Hinglish</div>
+                        <div class="text-sm">"Kal meeting hai at office"</div>
+                    </button>
+                    <button class="sample-text p-3 rounded-lg text-left transition-all" style="background: var(--bg-card); border: 1px solid var(--border-soft); color: var(--text-muted);" data-text="Hello, how are you?">
+                        <div class="font-medium">English</div>
+                        <div class="text-sm">"Hello, how are you?"</div>
+                    </button>
+                    <button class="sample-text p-3 rounded-lg text-left transition-all" style="background: var(--bg-card); border: 1px solid var(--border-soft); color: var(--text-muted);" data-text="आज बहुत अच्छा दिन है">
+                        <div class="font-medium">Hindi</div>
+                        <div class="text-sm">"आज बहुत अच्छा दिन है"</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-16" style="background: var(--bg-card); border-top: 1px solid var(--border-soft);">
+        <div class="max-w-7xl mx-auto px-4 py-8">
+            <div class="text-center" style="color: var(--text-muted);">
+                <p>© 2023 LangSense AI. Powered by advanced NLP technology.</p>
+                <p class="mt-2">Built with Django, REST Framework, and Tailwind CSS</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="/static/js/app.js"></script>
+    
+    <!-- 3D Particles Background Initialization -->
+    <script>
+        // Initialize 3D animated background particles
+        tsParticles.load("particles-bg", {
+            particles: {
+                color: { value: "#ffffff" },
+                number: { value: 120 },
+                move: { enable: true, speed: 0.6 },
+                size: { value: 2 },
+                links: { enable: false },
+                opacity: { value: 0.3 }
+            },
+            interactivity: {
+                events: {
+                    onHover: { enable: true, mode: "repulse" }
+                },
+                modes: {
+                    repulse: { distance: 120 }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

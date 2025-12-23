@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics - LangSense AI</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#6366F1',
+                        'secondary': '#22D3EE',
+                        'hindi': '#FF6B35',
+                        'english': '#3B82F6',
+                        'hinglish': '#10B981',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="min-h-screen font-sans transition-all duration-300" style="background: var(--bg-main); color: var(--text-main);">
+    
+    <!-- 3D Animated Background Particles -->
+    <div id="particles-bg" class="fixed inset-0 -z-10"></div>
+    
+    <!-- Navigation -->
+    <nav class="glass sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-lg flex items-center justify-center" style="background: var(--primary-gradient);">
+                        <i class="fas fa-language text-white text-lg"></i>
+                    </div>
+                    <h1 class="text-xl font-bold" style="color: var(--text-main);">LangSense AI</h1>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="hover:opacity-80 transition-opacity" style="color: var(--text-muted);">Home</a>
+                    <a href="/history/" class="hover:opacity-80 transition-opacity" style="color: var(--text-muted);">History</a>
+                    <a href="/statistics/" class="font-semibold" style="color: var(--text-main);">Statistics</a>
+                    <a href="/about/" class="hover:opacity-80 transition-opacity" style="color: var(--text-muted);">About</a>
+                </div>
+                
+                <!-- Theme Toggle -->
+                <button id="theme-toggle" class="p-2 rounded-lg hover:opacity-80 transition-opacity" style="background: var(--bg-card);">
+                    <i class="fas fa-moon" style="color: var(--text-main);"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h2 class="text-4xl font-bold mb-4" style="color: var(--text-main);">
+                <i class="fas fa-chart-bar mr-3"></i>Detection Statistics
+            </h2>
+            <p class="text-xl" style="color: var(--text-muted);">
+                Analytics and insights from language detection results
+            </p>
+        </div>
+
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="glass-card p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm" style="color: var(--text-muted);">Total Detections</p>
+                        <p id="total-detections" class="text-3xl font-bold" style="color: var(--text-main);">0</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-lg flex items-center justify-center" style="background: var(--accent-primary); opacity: 0.2;">
+                        <i class="fas fa-database text-xl text-white"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="glass-card p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm" style="color: var(--text-muted);">Avg Confidence</p>
+                        <p id="avg-confidence" class="text-3xl font-bold" style="color: var(--text-main);">0%</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-lg flex items-center justify-center" style="background: var(--accent-secondary); opacity: 0.2;">
+                        <i class="fas fa-chart-line text-xl text-white"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="glass-card p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm" style="color: var(--text-muted);">Most Detected</p>
+                        <p id="most-detected" class="text-3xl font-bold" style="color: var(--text-main);">-</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-lg flex items-center justify-center" style="background: var(--hinglish); opacity: 0.2;">
+                        <i class="fas fa-language text-xl text-white"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="glass-card p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm" style="color: var(--text-muted);">Success Rate</p>
+                        <p id="success-rate" class="text-3xl font-bold" style="color: var(--text-main);">0%</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-lg flex items-center justify-center" style="background: #10b981; opacity: 0.2;">
+                        <i class="fas fa-check-circle text-xl text-white"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <!-- Language Distribution Chart -->
+            <div class="glass-card p-6">
+                <h3 class="text-xl font-bold mb-4" style="color: var(--text-main);">
+                    <i class="fas fa-chart-pie mr-2"></i>Language Distribution
+                </h3>
+                <div class="h-64">
+                    <canvas id="languageChart"></canvas>
+                </div>
+            </div>
+            
+            <!-- Confidence Distribution Chart -->
+            <div class="glass-card p-6">
+                <h3 class="text-xl font-bold mb-4" style="color: var(--text-main);">
+                    <i class="fas fa-chart-bar mr-2"></i>Confidence Distribution
+                </h3>
+                <div class="h-64">
+                    <canvas id="confidenceChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="glass-card p-6">
+            <h3 class="text-xl font-bold mb-4" style="color: var(--text-main);">
+                <i class="fas fa-clock mr-2"></i>Recent Activity (Last 7 Days)
+            </h3>
+            <div class="h-64">
+                <canvas id="activityChart"></canvas>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-16" style="background: var(--bg-card); border-top: 1px solid var(--border-soft);">
+        <div class="max-w-7xl mx-auto px-4 py-8">
+            <div class="text-center" style="color: var(--text-muted);">
+                <p>© 2023 LangSense AI. Powered by advanced NLP technology.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="/static/js/statistics.js"></script>
+    <script src="/static/js/app.js"></script>
+    
+    <!-- tsParticles Library for 3D Background -->
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@3/tsparticles.bundle.min.js"></script>
+    
+    <!-- 3D Particles Background Initialization -->
+    <script>
+        // Initialize 3D animated background particles
+        tsParticles.load("particles-bg", {
+            particles: {
+                color: { value: "#ffffff" },
+                number: { value: 120 },
+                move: { enable: true, speed: 0.6 },
+                size: { value: 2 },
+                links: { enable: false },
+                opacity: { value: 0.3 }
+            },
+            interactivity: {
+                events: {
+                    onHover: { enable: true, mode: "repulse" }
+                },
+                modes: {
+                    repulse: { distance: 120 }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
